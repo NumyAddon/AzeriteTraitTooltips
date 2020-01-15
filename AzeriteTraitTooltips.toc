@@ -1,7 +1,7 @@
-## Interface: 80205
+## Interface: 80300
 ## Title: Azerite Trait Tooltips
 ## Author: Numy
-## Version: v1.2.1
+## Version: @project-version@
 ## OptionalDeps: Ace3
 embeds.xml
 core.lua
