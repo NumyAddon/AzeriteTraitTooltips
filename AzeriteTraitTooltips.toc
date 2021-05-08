@@ -1,8 +1,9 @@
-## Interface: 90005
+## Interface: @toc-version-retail@
 ## Title: Azerite Trait Tooltips
 ## Author: Numy
 ## Version: @project-version@
 ## OptionalDeps: Ace3
+## X-Curse-Project-ID: 313461
 
 libs\embeds.xml
 core.lua
