@@ -1,7 +1,7 @@
 ## Interface: @toc-version-retail@
 ## Title: Azerite Trait Tooltips
 ## Author: Numy
-## IconTexture: 982414
+## IconTexture: Interface\Addons\AzeriteTooltip\media\icon
 ## Version: @project-version@
 ## OptionalDeps: Ace3
 ## X-Curse-Project-ID: 313461
