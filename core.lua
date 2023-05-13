@@ -8,7 +8,6 @@ local _DB = {}
 AzeriteTraitTooltipsFunction = _M
 AzeriteTraitTooltipsDB = _DB
 
-local AzeriteTraitTooltips_Version = GetAddOnMetadata("AzeriteTraitTooltips", "Version")
 _DB.powerTable = {}
 
 _M.AlreadyAdded = function(str1, tooltip)
