@@ -3,10 +3,8 @@
 ## Author: Numy
 ## IconTexture: Interface\Addons\AzeriteTooltip\media\icon
 ## Version: @project-version@
-## OptionalDeps: Ace3
 ## X-Curse-Project-ID: 313461
 ## X-Wago-ID: RqGZJoGd
 
-libs\embeds.xml
 core.lua
 
