@@ -28,34 +28,46 @@ jobs:
       - name: Read Changelog
         id: changelog
         run: |
-          whoami
-          ls -tralh .release
-          chmod 777 .release
-          ls -tralh .release
+          echo "ZIP_NAME=$(ls .release/*.zip)" >> $GITHUB_OUTPUT
           {
             echo 'CHANGELOG<<EOF'
             cat .release/*/CHANGELOG.md
             echo EOF
           } >> "$GITHUB_OUTPUT"
 
-      - name: Update Discord webhook
-        uses: "hugoalh/send-discord-webhook-ghaction@v6.0.0"
+      - name: Notify Discord webhook
+        uses: "tsickert/discord-webhook@v6.0.0"
         with:
-          key: "${{secrets.DISCORD_WEBHOOK_URL}}"
+          webhook-url: "${{secrets.DISCORD_WEBHOOK_URL}}"
           content: "[${{ github.repository }}] New version released: ${{ github.event.release.tag_name }}"
           username: "NumyAddon"
-          avatar_url: "https://avatars.githubusercontent.com/u/97855854?s=200&v=4"
-          files: ".release/*.zip"
-          embeds: |
-            [
-              {
-                "author": {
-                  "name": "${{ github.event.release.author.login }}",
-                  "url": "${{ github.event.release.author.html_url }}",
-                  "icon_url": "${{ github.event.release.author.avatar_url }}"
-                },
-                "title": "${{ github.repository }} ${{ github.event.release.tag_name }}",
-                "url": "https://github.com/${{ github.repository }}",
-                "description": "${{ steps.changelog.outputs.changelog }}"
-              }
-            ]
+          avatar-url: "https://avatars.githubusercontent.com/u/97855854?s=200&v=4"
+          filename: ${{ steps.changelog.outputs.ZIP_NAME }}
+          embed-title: "${{ github.repository }} ${{ github.event.release.tag_name }}"
+          embed-url: "https://github.com/${{ github.repository }}"
+          embed-description: "${{ steps.changelog.outputs.CHANGELOG }}"
+          embed-author-name: "${{ github.event.release.author.login }}"
+          embed-author-url: "${{ github.event.release.author.html_url }}"
+          embed-author-icon-url: "${{ github.event.release.author.avatar_url }}"
+
+#      - name: Notify Discord webhook
+#        uses: "hugoalh/send-discord-webhook-ghaction@v6.0.0"
+#        with:
+#          key: "${{secrets.DISCORD_WEBHOOK_URL}}"
+#          content: "[${{ github.repository }}] New version released: ${{ github.event.release.tag_name }}"
+#          username: "NumyAddon"
+#          avatar_url: "https://avatars.githubusercontent.com/u/97855854?s=200&v=4"
+#          files: ".release/*.zip"
+#          embeds: |
+#            [
+#              {
+#                "author": {
+#                  "name": "${{ github.event.release.author.login }}",
+#                  "url": "${{ github.event.release.author.html_url }}",
+#                  "icon_url": "${{ github.event.release.author.avatar_url }}"
+#                },
+#                "title": "${{ github.repository }} ${{ github.event.release.tag_name }}",
+#                "url": "https://github.com/${{ github.repository }}",
+#                "description": "${{ steps.changelog.outputs.changelog }}"
+#              }
+#            ]
