@@ -10,9 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      #CF_API_KEY: ${{ secrets.CF_API_KEY }}
+      CF_API_KEY: ${{ secrets.CF_API_KEY }}
       GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
-      #WAGO_API_TOKEN: ${{ secrets.WAGO_API_TOKEN }}
+      WAGO_API_TOKEN: ${{ secrets.WAGO_API_TOKEN }}
 
     steps:
       - uses: actions/checkout@v4
@@ -25,8 +25,8 @@ jobs:
       - name: Create Retail Package
         uses: BigWigsMods/packager@v2
 
-      - name: Read Changelog
-        id: changelog
+      - name: Prepare for Discord webhook
+        id: discord-webhook-prep
         run: |
           echo "ZIP_NAME=$(ls .release/*.zip)" >> $GITHUB_OUTPUT
           {
@@ -39,35 +39,13 @@ jobs:
         uses: "tsickert/discord-webhook@v6.0.0"
         with:
           webhook-url: "${{secrets.DISCORD_WEBHOOK_URL}}"
-          content: "[${{ github.repository }}] New version released: ${{ github.event.release.tag_name }}"
+          content: "[${{ github.repository }}](https://github.com/${{ github.repository }}) New version released: []${{ github.event.release.tag_name }}](https://github.com/${{ github.repository }}/releases/tag/${{ github.event.release.tag_name }})"
           username: "NumyAddon"
           avatar-url: "https://avatars.githubusercontent.com/u/97855854?s=200&v=4"
-          filename: ${{ steps.changelog.outputs.ZIP_NAME }}
+          filename: ${{ steps.discord-webhook-prep.outputs.ZIP_NAME }}
           embed-title: "${{ github.repository }} ${{ github.event.release.tag_name }}"
           embed-url: "https://github.com/${{ github.repository }}"
-          embed-description: "${{ steps.changelog.outputs.CHANGELOG }}"
+          embed-description: "${{ steps.discord-webhook-prep.outputs.CHANGELOG }}"
           embed-author-name: "${{ github.event.release.author.login }}"
           embed-author-url: "${{ github.event.release.author.html_url }}"
           embed-author-icon-url: "${{ github.event.release.author.avatar_url }}"
-
-#      - name: Notify Discord webhook
-#        uses: "hugoalh/send-discord-webhook-ghaction@v6.0.0"
-#        with:
-#          key: "${{secrets.DISCORD_WEBHOOK_URL}}"
-#          content: "[${{ github.repository }}] New version released: ${{ github.event.release.tag_name }}"
-#          username: "NumyAddon"
-#          avatar_url: "https://avatars.githubusercontent.com/u/97855854?s=200&v=4"
-#          files: ".release/*.zip"
-#          embeds: |
-#            [
-#              {
-#                "author": {
-#                  "name": "${{ github.event.release.author.login }}",
-#                  "url": "${{ github.event.release.author.html_url }}",
-#                  "icon_url": "${{ github.event.release.author.avatar_url }}"
-#                },
-#                "title": "${{ github.repository }} ${{ github.event.release.tag_name }}",
-#                "url": "https://github.com/${{ github.repository }}",
-#                "description": "${{ steps.changelog.outputs.changelog }}"
-#              }
-#            ]
