@@ -28,6 +28,8 @@ jobs:
       - name: Read Changelog
         id: changelog
         run: |
+          whoami
+          ls -tralh .release
           {
             echo 'CHANGELOG<<EOF'
             cat .release/*/CHANGELOG.md
