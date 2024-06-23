@@ -37,7 +37,7 @@ jobs:
       - name: Update Discord webhook
         uses: "hugoalh/send-discord-webhook-ghaction@v6.0.0"
         with:
-          key: "${{secrets.DISCORD_WEBHOOK_KEY}}"
+          key: "${{secrets.DISCORD_WEBHOOK_URL}}"
           content: "[${{ github.repository }}] New version released: ${{ github.event.release.tag_name }}"
           username: "NumyAddon"
           avatar_url: "https://avatars.githubusercontent.com/u/97855854?s=200&v=4"
