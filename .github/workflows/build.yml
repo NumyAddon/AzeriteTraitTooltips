@@ -25,20 +25,12 @@ jobs:
       - name: Create Retail Package
         uses: BigWigsMods/packager@v2
 
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
-
       - name: Read Changelog
         id: changelog
         run: |
-          ls -l
-          ls .release -l
-          
           {
             echo 'CHANGELOG<<<EOF'
-            cat CHANGELOG.md
+            cat .release/*/CHANGELOG.md
             echo EOF
           } >> "$GITHUB_OUTPUT"
 
@@ -54,9 +46,9 @@ jobs:
             [
               {
                 "author": {
-                  "name": "Numy",
-                  "url": "https://github.com/numyaddon",
-                  "icon_url": "https://avatars.githubusercontent.com/u/97855854?s=200&v=4"
+                  "name": "${{ github.event.release.author.login }}",
+                  "url": "${{ github.event.release.author.html_url }}",
+                  "icon_url": "${{ github.event.release.author.avatar_url }}"
                 },
                 "title": "${{ github.repository }} ${{ github.event.release.tag_name }}",
                 "url": "https://github.com/${{ github.repository }}",
