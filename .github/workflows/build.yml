@@ -25,9 +25,17 @@ jobs:
       - name: Create Retail Package
         uses: BigWigsMods/packager@v2
 
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+
       - name: Read Changelog
         id: changelog
         run: |
+          ls -l
+          ls .release -l
+          
           {
             echo 'CHANGELOG<<<EOF'
             cat CHANGELOG.md
