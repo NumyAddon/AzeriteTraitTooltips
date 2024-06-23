@@ -10,9 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      CF_API_KEY: ${{ secrets.CF_API_KEY }}
+      #CF_API_KEY: ${{ secrets.CF_API_KEY }}
       GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
-      WAGO_API_TOKEN: ${{ secrets.WAGO_API_TOKEN }}
+      #WAGO_API_TOKEN: ${{ secrets.WAGO_API_TOKEN }}
 
     steps:
       - uses: actions/checkout@v4
@@ -24,3 +24,34 @@ jobs:
 
       - name: Create Retail Package
         uses: BigWigsMods/packager@v2
+
+      - name: Read Changelog
+        id: changelog
+        run: |
+          {
+            echo 'CHANGELOG<<<EOF'
+            cat CHANGELOG.md
+            echo EOF
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Update Discord webhook
+        uses: "hugoalh/send-discord-webhook-ghaction@v6.0.0"
+        with:
+          key: "${{secrets.DISCORD_WEBHOOK_KEY}}"
+          content: "[${{ github.repository }}] New version released: ${{ github.event.release.tag_name }}"
+          username: "NumyAddon"
+          avatar_url: "https://avatars.githubusercontent.com/u/97855854?s=200&v=4"
+          files: ".release/*.zip"
+          embeds: |
+            [
+              {
+                "author": {
+                  "name": "Numy",
+                  "url": "https://github.com/numyaddon",
+                  "icon_url": "https://avatars.githubusercontent.com/u/97855854?s=200&v=4"
+                },
+                "title": "${{ github.repository }} ${{ github.event.release.tag_name }}",
+                "url": "https://github.com/${{ github.repository }}",
+                "description": "${{ steps.changelog.outputs.changelog }}"
+              }
+            ]
