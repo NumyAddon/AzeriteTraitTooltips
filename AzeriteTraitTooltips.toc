@@ -5,6 +5,16 @@
 ## Version: @project-version@
 ## X-Curse-Project-ID: 313461
 ## X-Wago-ID: RqGZJoGd
+## Category: Development Tools
+## Category-deDE: Entwicklungstools
+## Category-esES: Herramientas de Desarrollo
+## Category-esMX: Herramientas de Desarrollo
+## Category-frFR: Outils de Développement
+## Category-ptBR: Ferramentas de Desenvolvimento
+## Category-ruRU: Инструменты разработки
+## Category-zhCN: 开发工具
+
+libs\LibVersionCheck-1.0\LibVersionCheck-1.0.xml
 
 core.lua
 
