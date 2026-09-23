@@ -4,6 +4,8 @@
 #@end-debug@
 ## Title: Azerite Trait Tooltips
 ## Author: Numy
+## X-GameType: [Game]
+## X-GameFamily: [Family]
 ## IconTexture: Interface\Addons\AzeriteTooltip\media\icon
 ## Version: @project-version@
 ## X-Curse-Project-ID: 313461
